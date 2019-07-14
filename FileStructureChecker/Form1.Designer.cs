@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.labelFolder1 = new System.Windows.Forms.Label();
             this.labelFolder2 = new System.Windows.Forms.Label();
             this.textBoxFolder1 = new System.Windows.Forms.TextBox();
             this.textBoxFolder2 = new System.Windows.Forms.TextBox();
             this.richTextBoxDiff = new System.Windows.Forms.RichTextBox();
             this.buttonShowDiff = new System.Windows.Forms.Button();
+            this.buttonSync = new System.Windows.Forms.Button();
+            this.buttonReverseFolderPath = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelFolder1
@@ -78,7 +81,7 @@
             // 
             // buttonShowDiff
             // 
-            this.buttonShowDiff.Location = new System.Drawing.Point(606, 61);
+            this.buttonShowDiff.Location = new System.Drawing.Point(672, 42);
             this.buttonShowDiff.Name = "buttonShowDiff";
             this.buttonShowDiff.Size = new System.Drawing.Size(75, 23);
             this.buttonShowDiff.TabIndex = 5;
@@ -86,11 +89,34 @@
             this.buttonShowDiff.UseVisualStyleBackColor = true;
             this.buttonShowDiff.Click += new System.EventHandler(this.buttonShowDiff_Click);
             // 
+            // buttonSync
+            // 
+            this.buttonSync.Location = new System.Drawing.Point(672, 89);
+            this.buttonSync.Name = "buttonSync";
+            this.buttonSync.Size = new System.Drawing.Size(75, 23);
+            this.buttonSync.TabIndex = 6;
+            this.buttonSync.Text = "Sync";
+            this.buttonSync.UseVisualStyleBackColor = true;
+            this.buttonSync.Click += new System.EventHandler(this.buttonSync_Click);
+            // 
+            // buttonReverseFolderPath
+            // 
+            this.buttonReverseFolderPath.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonReverseFolderPath.BackgroundImage")));
+            this.buttonReverseFolderPath.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonReverseFolderPath.Location = new System.Drawing.Point(589, 39);
+            this.buttonReverseFolderPath.Name = "buttonReverseFolderPath";
+            this.buttonReverseFolderPath.Size = new System.Drawing.Size(37, 67);
+            this.buttonReverseFolderPath.TabIndex = 7;
+            this.buttonReverseFolderPath.UseVisualStyleBackColor = true;
+            this.buttonReverseFolderPath.Click += new System.EventHandler(this.buttonReverseFolderPath_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonReverseFolderPath);
+            this.Controls.Add(this.buttonSync);
             this.Controls.Add(this.buttonShowDiff);
             this.Controls.Add(this.richTextBoxDiff);
             this.Controls.Add(this.textBoxFolder2);
@@ -112,6 +138,8 @@
         private System.Windows.Forms.TextBox textBoxFolder2;
         private System.Windows.Forms.RichTextBox richTextBoxDiff;
         private System.Windows.Forms.Button buttonShowDiff;
+        private System.Windows.Forms.Button buttonSync;
+        private System.Windows.Forms.Button buttonReverseFolderPath;
     }
 }
 

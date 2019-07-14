@@ -7,4 +7,4 @@ C:\Users\claus\Desktop\FileStructureChecker\FileStructureChecker\obj\Debug\FileS
 C:\Users\claus\Desktop\FileStructureChecker\FileStructureChecker\obj\Debug\FileStructureChecker.csproj.CoreCompileInputs.cache
 C:\Users\claus\Desktop\FileStructureChecker\FileStructureChecker\obj\Debug\FileStructureChecker.exe
 C:\Users\claus\Desktop\FileStructureChecker\FileStructureChecker\obj\Debug\FileStructureChecker.pdb
-C:\Users\claus\Desktop\FileStructureChecker\FileStructureChecker\obj\Debug\FileStructureChecker.RichTextBoxExtensions.resources
+C:\Users\claus\Desktop\FileStructureChecker\FileStructureChecker\obj\Debug\FileStructureChecker.Form1.resources

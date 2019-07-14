@@ -11,23 +11,7 @@ using System.Windows.Forms;
 
 namespace FileStructureChecker
 {
-    public static class RichTextBoxExtensions
-    {
-        public static void AppendText(this RichTextBox box, string text, Color color)
-        {
-            int start = box.TextLength;
-            box.AppendText(text);
-            int end = box.TextLength;
 
-            // Textbox may transform chars, so (end-start) != text.Length
-            box.Select(start, end - start);
-            {
-                box.SelectionColor = color;
-                // could set box.SelectionBackColor, box.SelectionFont too.
-            }
-            box.SelectionLength = 0; // clear
-        }
-    }
 
     public partial class Form1 : Form
     {
@@ -37,6 +21,8 @@ namespace FileStructureChecker
         string FolderPath2 { get; set; }
         Dictionary<string, string> AbsolutePathAndFileName1 { get; set; } = new Dictionary<string, string>();
         Dictionary<string, string> AbsolutePathAndFileName2 { get; set; } = new Dictionary<string, string>();
+        Dictionary<string, string> MissedFiles { get; set; } = new Dictionary<string, string>();
+        Dictionary<string, string> AddedFiles { get; set; } = new Dictionary<string, string>();
 
         public Form1()
         {
@@ -46,6 +32,8 @@ namespace FileStructureChecker
         private void buttonShowDiff_Click(object sender, EventArgs e)
         {
             richTextBoxDiff.Clear();
+            MissedFiles.Clear();
+            AddedFiles.Clear();
             List<string> pathsToShow = new List<string>();
             FolderPath1 = textBoxFolder1.Text.Replace('"', ' ').Trim();
             FolderPath2 = textBoxFolder2.Text.Replace('"', ' ').Trim(); ;
@@ -57,23 +45,29 @@ namespace FileStructureChecker
             {
                 if (!AbsolutePathAndFileName2.Any(x => x.Value.Equals(filePath.Value)))
                 {
-                    pathsToShow.Add(filePath.Key);
+                    AddedFiles.Add(filePath.Key, filePath.Value);
+                    //pathsToShow.Add(filePath.Key);
                 }
             }
-            foreach (string file in pathsToShow)
-                richTextBoxDiff.AppendText($"+ {file}\n", Color.Green);
+            //foreach (string file in pathsToShow)
+            //    richTextBoxDiff.AppendText($"+ {file}\n", Color.Green);
+            foreach (KeyValuePair<string, string> file in AddedFiles)
+                richTextBoxDiff.AppendText($"+ {file.Key}\n", Color.Green);
 
-            pathsToShow = new List<string>();
+                pathsToShow = new List<string>();
             foreach (KeyValuePair<string, string> filePath in AbsolutePathAndFileName2)
             {
                 if (!AbsolutePathAndFileName1.Any(x => x.Value.Equals(filePath.Value)))
                 {
-                    pathsToShow.Add(filePath.Key);
+                    //pathsToShow.Add(filePath.Key);
+                    MissedFiles.Add(filePath.Key, filePath.Value);
                 }
             }
-            richTextBoxDiff.SelectionColor = Color.Red;
-            foreach (string file in pathsToShow)
-                richTextBoxDiff.AppendText($"- {file}\n", Color.Red);
+            //richTextBoxDiff.SelectionColor = Color.Red;
+            //foreach (string file in pathsToShow)
+            //    richTextBoxDiff.AppendText($"- {file}\n", Color.Red);
+            foreach (KeyValuePair<string, string> file in MissedFiles)
+                richTextBoxDiff.AppendText($"- {file.Key}\n", Color.Red);
 
         }
 
@@ -114,5 +108,44 @@ namespace FileStructureChecker
             return absolutePaths;
         }
 
+        private void buttonSync_Click(object sender, EventArgs e)
+        {
+            if (MissedFiles.Count == 0)
+                return;
+            //string  MissedFiles.First().Key.Substring(textBoxFolder2.Text.Length);
+            foreach(KeyValuePair<string, string> keyValuePair in MissedFiles)
+            {
+                string barePath = keyValuePair.Key.Substring(FolderPath2.Length + 1);
+                string destinationPath = Path.Combine(FolderPath1, barePath);
+                Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
+                File.Copy(keyValuePair.Key, destinationPath);
+            }
+
+        }
+
+        private void buttonReverseFolderPath_Click(object sender, EventArgs e)
+        {
+            string tempString = textBoxFolder1.Text;
+            textBoxFolder1.Text = textBoxFolder2.Text;
+            textBoxFolder2.Text = tempString;
+        }
+    }
+
+    public static class RichTextBoxExtensions
+    {
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            int start = box.TextLength;
+            box.AppendText(text);
+            int end = box.TextLength;
+
+            // Textbox may transform chars, so (end-start) != text.Length
+            box.Select(start, end - start);
+            {
+                box.SelectionColor = color;
+                // could set box.SelectionBackColor, box.SelectionFont too.
+            }
+            box.SelectionLength = 0; // clear
+        }
     }
 }
